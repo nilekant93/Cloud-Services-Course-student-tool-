@@ -59,7 +59,7 @@ const Week2 = () => {
             
             <Card>
               <CardHeader>
-                <CardTitle>Week 2 Content</CardTitle>
+                <CardTitle>Week 2 tehtävät</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-6">

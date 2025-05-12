@@ -7,9 +7,9 @@ const Index = () => {
     <Layout>
       <div className="container mx-auto max-w-4xl">
         <div className="space-y-6">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Weekly Navigator</h1>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Cloud Services - kurssin deployment testaus</h1>
           <p className="text-lg text-muted-foreground">
-            Select a week from the sidebar to view its content. You can collapse the sidebar by clicking the menu icon.
+            Viikkokohtaiset osiot, joissa voi suorittaa deployment testejä tehtäväkohtaisesti.
           </p>
           
           <WeekContent weekNumber={1} />

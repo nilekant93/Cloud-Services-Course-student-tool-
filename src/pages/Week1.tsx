@@ -49,7 +49,7 @@ const Week1 = () => {
     <Layout>
       <div className="container mx-auto max-w-4xl">
         <div className="space-y-6">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Weekly Navigator</h1>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Viikot 1-8</h1>
           <p className="text-lg text-muted-foreground">
             Select a week from the sidebar to view its content. You can collapse the sidebar by clicking the menu icon.
           </p>
@@ -59,12 +59,11 @@ const Week1 = () => {
             
             <Card>
               <CardHeader>
-                <CardTitle>Week 1 Content</CardTitle>
+                <CardTitle>Week 1 PaaS tehtävä</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-6">
-                  This is the detailed content for Week 1. Each week contains 
-                  lessons, assignments, and resources tailored to the curriculum.
+                  Testi palauttaa hyväksyttty / hylätty mikäli URL liittyy 1 viikon tehtävään
                 </p>
                 
                 <div className="space-y-6">
