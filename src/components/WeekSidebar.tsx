@@ -1,21 +1,19 @@
 
 import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Menu, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface WeekSidebarProps {
   className?: string;
-  activeWeek?: number;
-  onWeekChange?: (week: number) => void;
 }
 
 const WeekSidebar: React.FC<WeekSidebarProps> = ({ 
-  className, 
-  activeWeek = 1,
-  onWeekChange
+  className
 }) => {
   const [isOpen, setIsOpen] = useState(true);
+  const location = useLocation();
   
   const weeks = Array.from({ length: 8 }, (_, i) => i + 1);
 
@@ -23,10 +21,9 @@ const WeekSidebar: React.FC<WeekSidebarProps> = ({
     setIsOpen(!isOpen);
   };
 
-  const handleWeekClick = (week: number) => {
-    if (onWeekChange) {
-      onWeekChange(week);
-    }
+  const getIsActiveWeek = (week: number) => {
+    if (location.pathname === "/" && week === 1) return true;
+    return location.pathname === `/week${week}`;
   };
 
   return (
@@ -60,15 +57,15 @@ const WeekSidebar: React.FC<WeekSidebarProps> = ({
             <ul className="space-y-1">
               {weeks.map((week) => (
                 <li key={week}>
-                  <button
-                    onClick={() => handleWeekClick(week)}
+                  <Link
+                    to={week === 1 ? "/" : `/week${week}`}
                     className={cn(
-                      "sidebar-item w-full text-left",
-                      activeWeek === week ? "active" : ""
+                      "sidebar-item w-full text-left block px-3 py-2 rounded-md transition-colors",
+                      getIsActiveWeek(week) ? "bg-sidebar-accent text-sidebar-accent-foreground" : "hover:bg-sidebar-hover text-sidebar-foreground"
                     )}
                   >
                     Week {week}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>

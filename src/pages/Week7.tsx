@@ -2,7 +2,7 @@
 import Layout from '@/components/Layout';
 import WeekContent from '@/components/WeekContent';
 
-const Index = () => {
+const Week7 = () => {
   return (
     <Layout>
       <div className="container mx-auto max-w-4xl">
@@ -12,11 +12,11 @@ const Index = () => {
             Select a week from the sidebar to view its content. You can collapse the sidebar by clicking the menu icon.
           </p>
           
-          <WeekContent weekNumber={1} />
+          <WeekContent weekNumber={7} />
         </div>
       </div>
     </Layout>
   );
 };
 
-export default Index;
+export default Week7;

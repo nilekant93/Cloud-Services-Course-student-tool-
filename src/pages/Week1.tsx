@@ -2,7 +2,7 @@
 import Layout from '@/components/Layout';
 import WeekContent from '@/components/WeekContent';
 
-const Index = () => {
+const Week1 = () => {
   return (
     <Layout>
       <div className="container mx-auto max-w-4xl">
@@ -19,4 +19,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Week1;
