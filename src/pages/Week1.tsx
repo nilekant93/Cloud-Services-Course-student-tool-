@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import { CircleCheck } from 'lucide-react';
 
 const Week1 = () => {
   const [urls, setUrls] = useState<{ [key: string]: string }>({
@@ -12,105 +11,115 @@ const Week1 = () => {
     lesson2: '',
     assignment: ''
   });
-  const { toast } = useToast();
+
+  const [testResults, setTestResults] = useState<{ [key: string]: boolean }>({});
 
   const handleUrlChange = (key: string, value: string) => {
     setUrls(prev => ({ ...prev, [key]: value }));
   };
 
-  const handleTestUrl = (url: string, name: string) => {
-    if (!url) {
-      toast({
-        title: "Error",
-        description: "Please enter a URL first",
-        variant: "destructive"
-      });
-      return;
-    }
+  const handleMarkTested = (key: string) => {
+    setTestResults(prev => {
+      const updated = { ...prev, [key]: true };
 
-    // Test if the URL is valid
-    try {
-      new URL(url);
-      window.open(url, '_blank');
-      toast({
-        title: "Success",
-        description: `Testing URL for ${name}`,
-      });
-    } catch (e) {
-      toast({
-        title: "Invalid URL",
-        description: "Please enter a valid URL",
-        variant: "destructive"
-      });
-    }
+      // Tallennetaan localStorageen, jos yksikin testi on tehty
+      const anyTestPassed = Object.values(updated).some(Boolean);
+      if (anyTestPassed) {
+        localStorage.setItem('week1Tested', 'true');
+      }
+
+      return updated;
+    });
   };
 
   return (
     <Layout>
       <div className="container mx-auto max-w-4xl">
         <div className="space-y-6">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Viikot 1-8</h1>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Week 1</h1>
           <p className="text-lg text-muted-foreground">
-            Select a week from the sidebar to view its content. You can collapse the sidebar by clicking the menu icon.
+            3 deployment tasks for week 1. Insert right URL under the right task and test it.
+            <b> One </b> of the tasks done is enough to get verification.
           </p>
-          
+
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Week 1</h2>
-            
             <Card>
               <CardHeader>
-                <CardTitle>Week 1 PaaS tehtävä</CardTitle>
+                <CardTitle>IaaS, PaaS and SaaS</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-6">
-                  Testi palauttaa hyväksyttty / hylätty mikäli URL liittyy 1 viikon tehtävään
+                  Click "Test URL" to mark task as done.
                 </p>
-                
+
                 <div className="space-y-6">
+
+                  {/* Fly.io */}
                   <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Lesson 1: Introduction to Concepts</h3>
+                    <h3 className="text-lg font-medium">implement some basic application to Fly.io PaaS.</h3>
                     <div className="flex flex-col md:flex-row gap-4">
-                      <Input 
-                        placeholder="Enter resource URL" 
+                      <Input
+                        placeholder="Enter resource URL"
                         value={urls.lesson1}
                         onChange={(e) => handleUrlChange('lesson1', e.target.value)}
                         className="flex-1"
                       />
-                      <Button onClick={() => handleTestUrl(urls.lesson1, 'Lesson 1')}>
+                      <Button onClick={() => handleMarkTested('lesson1')}>
                         Test URL
                       </Button>
                     </div>
+                    {testResults.lesson1 && (
+                      <div className="flex items-center gap-2 text-green-600 mt-2">
+                        <CircleCheck className="w-4 h-4" />
+                        <span>Test passed</span>
+                      </div>
+                    )}
                   </div>
-                  
+
+                  {/* Render.com */}
                   <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Lesson 2: Deep Dive into Applications</h3>
+                    <h3 className="text-lg font-medium">implement some basic application to Render.com PaaS.</h3>
                     <div className="flex flex-col md:flex-row gap-4">
-                      <Input 
-                        placeholder="Enter resource URL" 
+                      <Input
+                        placeholder="Enter resource URL"
                         value={urls.lesson2}
                         onChange={(e) => handleUrlChange('lesson2', e.target.value)}
                         className="flex-1"
                       />
-                      <Button onClick={() => handleTestUrl(urls.lesson2, 'Lesson 2')}>
+                      <Button onClick={() => handleMarkTested('lesson2')}>
                         Test URL
                       </Button>
                     </div>
+                    {testResults.lesson2 && (
+                      <div className="flex items-center gap-2 text-green-600 mt-2">
+                        <CircleCheck className="w-4 h-4" />
+                        <span>Test passed</span>
+                      </div>
+                    )}
                   </div>
-                  
+
+                  {/* Linux VPS */}
                   <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Weekly Assignment</h3>
+                    <h3 className="text-lg font-medium">setup a Linux VPS to some cloud VPS provider such as DigitalOcean, Hetzner, Oracle, Upcloud, AWS, Azure, Oracle or so.</h3>
                     <div className="flex flex-col md:flex-row gap-4">
-                      <Input 
-                        placeholder="Enter assignment URL" 
+                      <Input
+                        placeholder="Enter assignment URL"
                         value={urls.assignment}
                         onChange={(e) => handleUrlChange('assignment', e.target.value)}
                         className="flex-1"
                       />
-                      <Button onClick={() => handleTestUrl(urls.assignment, 'Assignment')}>
+                      <Button onClick={() => handleMarkTested('assignment')}>
                         Test URL
                       </Button>
                     </div>
+                    {testResults.assignment && (
+                      <div className="flex items-center gap-2 text-green-600 mt-2">
+                        <CircleCheck className="w-4 h-4" />
+                        <span>Test passed</span>
+                      </div>
+                    )}
                   </div>
+
                 </div>
               </CardContent>
             </Card>
@@ -122,3 +131,5 @@ const Week1 = () => {
 };
 
 export default Week1;
+
+
