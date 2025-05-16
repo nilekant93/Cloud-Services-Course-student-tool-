@@ -18,6 +18,26 @@ const Week1 = () => {
     setUrls(prev => ({ ...prev, [key]: value }));
   };
 
+   // Uusi funktio ensimmäisen kentän testaamiseen
+  const testLesson1 = async () => {
+    try {
+      const res = await fetch('http://localhost:3001/receive', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          url: urls.lesson1,
+          component: 'Week1'}),
+      });
+      if (res.ok) {
+        handleMarkTested('lesson1');
+      } else {
+        console.error('Server error:', res.status);
+      }
+    } catch (err) {
+      console.error('Request failed:', err);
+    }
+  };
+
   const handleMarkTested = (key: string) => {
     setTestResults(prev => {
       const updated = { ...prev, [key]: true };
@@ -64,7 +84,7 @@ const Week1 = () => {
                         onChange={(e) => handleUrlChange('lesson1', e.target.value)}
                         className="flex-1"
                       />
-                      <Button onClick={() => handleMarkTested('lesson1')}>
+                      <Button onClick={testLesson1}>
                         Test URL
                       </Button>
                     </div>
