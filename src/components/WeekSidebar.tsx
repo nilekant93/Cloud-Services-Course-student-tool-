@@ -10,7 +10,8 @@ interface WeekSidebarProps {
 
 const WeekSidebar: React.FC<WeekSidebarProps> = ({ className }) => {
   const [isOpen, setIsOpen] = useState(true);
-  const [week1Done, setWeek1Done] = useState(false);
+  // Tallenna testi-tulokset oliona, jossa key = weekN, value = boolean
+  const [testsDone, setTestsDone] = useState<{ [key: string]: boolean }>({});
   const location = useLocation();
 
   const weeks = Array.from({ length: 8 }, (_, i) => i + 1);
@@ -24,8 +25,13 @@ const WeekSidebar: React.FC<WeekSidebarProps> = ({ className }) => {
   };
 
   useEffect(() => {
-    const tested = localStorage.getItem('week1Tested') === 'true';
-    setWeek1Done(tested);
+    // Lue localStoragesta kullekin viikolle testin tila, esim "week1Tested", "week3Tested" jne.
+    const results: { [key: string]: boolean } = {};
+    weeks.forEach((week) => {
+      const key = `week${week}Tested`;
+      results[key] = localStorage.getItem(key) === 'true';
+    });
+    setTestsDone(results);
   }, []);
 
   return (
@@ -52,9 +58,8 @@ const WeekSidebar: React.FC<WeekSidebarProps> = ({ className }) => {
       )}>
         <div className="flex flex-col h-full">
           <div className="p-5 border-b border-sidebar-border">
-            {/* Muutettu Link vie index-sivulle */}
             <h2 className="text-xl font-semibold text-sidebar-foreground">
-              <Link to="/">Weekly Navigator</Link> {/* Tämä vie index-sivulle */}
+              <Link to="/">Cloud service Course</Link>
             </h2>
           </div>
 
@@ -72,7 +77,7 @@ const WeekSidebar: React.FC<WeekSidebarProps> = ({ className }) => {
                     )}
                   >
                     <span>Week {week}</span>
-                    {week === 1 && week1Done && (
+                    {testsDone[`week${week}Tested`] && (
                       <CheckCircle className="w-4 h-4 text-green-500" />
                     )}
                   </Link>
@@ -93,6 +98,3 @@ const WeekSidebar: React.FC<WeekSidebarProps> = ({ className }) => {
 };
 
 export default WeekSidebar;
-
-
-
