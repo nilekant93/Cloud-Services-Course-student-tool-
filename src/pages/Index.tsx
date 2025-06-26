@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import WeekContent from '@/components/WeekContent';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,8 @@ const Index = () => {
   const [backendResponse, setBackendResponse] = useState<string | null>(null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loggedInUsername, setLoggedInUsername] = useState('');
 
   const [showCreateAccount, setShowCreateAccount] = useState(false);
   const [newUsername, setNewUsername] = useState('');
@@ -18,11 +20,20 @@ const Index = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const storedUsername = localStorage.getItem('username');
+    setIsLoggedIn(!!token);
+    if (storedUsername) setLoggedInUsername(storedUsername);
+  }, []);
+
   const handleClearLocalStorage = () => {
     localStorage.clear();
+    setIsLoggedIn(false);
+    setLoggedInUsername('');
     toast({
       title: "LocalStorage tyhjennetty",
-      description: "Kaikki tallennetut testitulokset on poistettu.",
+      description: "Kaikki tallennetut tiedot on poistettu.",
     });
     window.location.reload();
   };
@@ -45,6 +56,89 @@ const Index = () => {
         variant: "destructive",
       });
     }
+  };
+
+  const handleCreateAccount = async () => {
+    if (newPassword !== confirmPassword) {
+      toast({
+        title: "Salasanat eivät täsmää",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:3001/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: newUsername,
+          password: newPassword,
+          class_code: classCode,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        toast({ title: "Account created successfully" });
+        setShowCreateAccount(false);
+      } else {
+        toast({
+          title: "Error",
+          description: data.error || "Registration failed.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Server connection failed.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      const res = await fetch("http://localhost:3001/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", username);
+        setLoggedInUsername(username);
+        toast({
+          title: "Logged in",
+        });
+        setIsLoggedIn(true);
+      } else {
+        toast({
+          title: "Login failed",
+          description: data.error || "Check your username and password.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Server connection failed.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    setIsLoggedIn(false);
+    setLoggedInUsername('');
+    toast({ title: "Logged out" });
   };
 
   return (
@@ -76,48 +170,60 @@ const Index = () => {
           {/* Login-ominaisuudet */}
           <div className="pt-10 space-y-4 border-t border-gray-200 mt-10">
             <h2 className="text-2xl font-semibold">Student Login</h2>
-            <p className="text-muted-foreground">
-              First you must create a student account (from the next section below). If you already have an account, you can log in with your credentials below.
-            </p>
-            
+            {!isLoggedIn ? (
+              <>
+                <div className="space-y-3 pt-4">
+                  <Input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <Input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <Button variant="default" onClick={handleLogin}>
+                    Log in
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div className="space-y-2">
+                <p className="text-muted-foreground">
+                  Logged in as: <strong>{loggedInUsername}</strong>
+                </p>
+                <Button variant="secondary" onClick={handleLogout}>
+                  Log out
+                </Button>
+              </div>
+            )}
+          </div>
 
-            {/* Login-lomake */}
-            <div className="space-y-3 pt-4">
-              <Input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <Input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <Button variant="default">Log in</Button>
-            </div>
-
-            {/* Create Account -painike ja lomake */}
+          {/* Luo käyttäjä */}
+          {!isLoggedIn && (
             <div className="pt-10 space-y-4 border-t border-gray-200 mt-10">
               <h2 className="text-2xl font-semibold">Create a Student Account</h2>
               <p className="text-muted-foreground font-bold">
-              - IMPORTANT: Your username must follow the format "firstnamelastname". For example, Matti Meikäläinen becomes mattimeikalainen (do not use special characters like ä, ö, or å).
-            </p>
-            <p className="text-muted-foreground font-bold">
-              - If the username is already taken or someone else has the same name, add a number at the end of your username (e.g., mattimeikalainen1).
-            </p>
-            <p className="text-muted-foreground font-bold">
-              - Do NOT forget your credentials! If you do, contact your teacher.
-            </p>
-            <p className="text-muted-foreground">
-              PLEASE ALSO NOTE: Your username must be included in the deployment URLs for the week tasks!
-            </p>
+                - IMPORTANT: Your username must follow the format "firstnamelastname". For example, Matti Meikäläinen becomes mattimeikalainen.
+              </p>
+              <p className="text-muted-foreground font-bold">
+                - Add a number if needed (e.g. mattimeikalainen1).
+              </p>
+              <p className="text-muted-foreground font-bold">
+                - Do NOT forget your credentials! If you do, contact your teacher.
+              </p>
+              <p className="text-muted-foreground">
+                PLEASE ALSO NOTE: Your username must be included in the deployment URLs for the week tasks!
+              </p>
+
               <Button
                 variant="secondary"
                 onClick={() => setShowCreateAccount(!showCreateAccount)}
               >
-                Create a student account
+                {showCreateAccount ? "Cancel" : "Create a student account"}
               </Button>
 
               {showCreateAccount && (
@@ -146,11 +252,13 @@ const Index = () => {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   />
-                  <Button variant="default">Create Account</Button>
+                  <Button variant="default" onClick={handleCreateAccount}>
+                    Create Account
+                  </Button>
                 </div>
               )}
             </div>
-          </div>
+          )}
         </div>
       </div>
     </Layout>
