@@ -100,42 +100,53 @@ const Index = () => {
   };
 
   const handleLogin = async () => {
-    try {
-      const res = await fetch("http://localhost:3001/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+  const res = await fetch("http://localhost:3001/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password }),
+  });
 
-      const data = await res.json();
+  const data = await res.json();
 
-      if (res.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("username", username);
-        setLoggedInUsername(username);
-        toast({
-          title: "Logged in",
-        });
-        setIsLoggedIn(true);
-      } else {
-        toast({
-          title: "Login failed",
-          description: data.error || "Check your username and password.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Server connection failed.",
-        variant: "destructive",
+  if (res.ok) {
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("username", username);
+    localStorage.setItem("loggedIn", "true");
+    setLoggedInUsername(username);
+    toast({ title: "Logged in" });
+    setIsLoggedIn(true);
+
+    // 🔥 Hae käyttäjän suoritustiedot kirjautumisen jälkeen
+    const progressRes = await fetch("http://localhost:3001/user/progress", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${data.token}`,
+      },
+    });
+
+    if (progressRes.ok) {
+      const progressData = await progressRes.json();
+
+      // Tallenna jokainen viikkotieto localStorageen
+      Object.entries(progressData).forEach(([key, value]) => {
+        localStorage.setItem(key, String(value));
       });
+    } else {
+      console.error("Failed to fetch progress data");
     }
-  };
+  } else {
+    toast({
+      title: "Login failed",
+      description: data.error || "Invalid credentials",
+    });
+  }
+};
+
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    localStorage.clear();
     setIsLoggedIn(false);
     setLoggedInUsername('');
     toast({ title: "Logged out" });

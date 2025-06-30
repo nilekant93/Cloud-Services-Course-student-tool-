@@ -14,6 +14,9 @@ const Week1 = () => {
 
   const [testResults, setTestResults] = useState<{ [key: string]: boolean }>({});
   const [testStatus, setTestStatus] = useState<'loading' | 'passed' | 'failed' | undefined>();
+  const [checkResults, setCheckResults] = useState<
+    { name: string; passed: boolean; message: string }[]
+  >([]);
 
   const handleUrlChange = (key: string, value: string) => {
     setUrls(prev => ({ ...prev, [key]: value }));
@@ -21,6 +24,8 @@ const Week1 = () => {
 
   const testLesson1 = async () => {
     setTestStatus('loading');
+    setCheckResults([]);
+
     try {
       const res = await fetch('http://localhost:3001/receive', {
         method: 'POST',
@@ -37,12 +42,24 @@ const Week1 = () => {
       if (res.ok && data.test_passed) {
         handleMarkTested('lesson1');
         setTestStatus('passed');
+        await markWeekDone();
       } else {
         setTestStatus('failed');
+      }
+
+      if (data.checks) {
+        setCheckResults(data.checks);
       }
     } catch (err) {
       console.error('Request failed:', err);
       setTestStatus('failed');
+      setCheckResults([
+        {
+          name: 'Network error',
+          passed: false,
+          message: 'Could not connect to server',
+        }
+      ]);
     }
   };
 
@@ -57,14 +74,36 @@ const Week1 = () => {
     });
   };
 
+  const markWeekDone = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  try {
+    const res = await fetch('http://localhost:3001/mark_week_done', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ week: 'week1done' }),
+    });
+
+    if (!res.ok) {
+      console.error('Failed to mark week done in database');
+    }
+  } catch (error) {
+    console.error('Error updating week status:', error);
+  }
+};
+
+
   return (
     <Layout>
       <div className="container mx-auto max-w-4xl">
         <div className="space-y-6">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Week 1</h1>
           <p className="text-lg text-muted-foreground">
-            IaaS, PaaS and SaaS,
-            using cloud services
+            IaaS, PaaS and SaaS, using cloud services
           </p>
 
           <div className="space-y-6">
@@ -78,10 +117,8 @@ const Week1 = () => {
                 </p>
 
                 <div className="space-y-6">
-
-                  {/* Fly.io */}
                   <div className="space-y-4">
-                    <h3 className="text-lg font-medium">implement some basic application to Fly.io PaaS.</h3>
+                    <h3 className="text-lg font-medium">All tests must be passed</h3>
                     <div className="flex flex-col md:flex-row gap-4">
                       <Input
                         placeholder="Enter resource URL"
@@ -89,10 +126,10 @@ const Week1 = () => {
                         onChange={(e) => handleUrlChange('lesson1', e.target.value)}
                         className="flex-1"
                       />
-                      <Button onClick={testLesson1}>
-                        Test URL
-                      </Button>
+                      <Button onClick={testLesson1}>Test URL</Button>
                     </div>
+
+                    {/* Test status */}
                     {testStatus === 'loading' && (
                       <div className="flex items-center gap-2 text-blue-600 mt-2">
                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -102,7 +139,7 @@ const Week1 = () => {
                     {testStatus === 'passed' && (
                       <div className="flex items-center gap-2 text-green-600 mt-2">
                         <CircleCheck className="w-4 h-4" />
-                        <span>Test passed</span>
+                        <span><strong>Test passed. You can now move to next task.</strong></span>
                       </div>
                     )}
                     {testStatus === 'failed' && (
@@ -111,7 +148,30 @@ const Week1 = () => {
                         <span>Test failed</span>
                       </div>
                     )}
-                  </div>           
+
+                    {/* Check results list */}
+                    {checkResults.length > 0 && (
+                      <ul className="mt-4 space-y-2">
+                        {checkResults.map((check, index) => (
+                          <li
+                            key={index}
+                            className={`flex items-start gap-2 ${
+                              check.passed ? 'text-green-600' : 'text-red-600'
+                            }`}
+                          >
+                            {check.passed ? (
+                              <CircleCheck className="w-4 h-4 mt-0.5" />
+                            ) : (
+                              <XCircle className="w-4 h-4 mt-0.5" />
+                            )}
+                            <div>
+                              {check.name}: {check.message}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
               </CardContent>
             </Card>
