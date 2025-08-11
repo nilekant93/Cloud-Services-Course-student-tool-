@@ -22,46 +22,61 @@ const Week1 = () => {
     setUrls(prev => ({ ...prev, [key]: value }));
   };
 
-  const testLesson1 = async () => {
-    setTestStatus('loading');
-    setCheckResults([]);
+const testLesson1 = async () => {
+  setTestStatus('loading');
+  setCheckResults([]);
 
-    try {
-      const res = await fetch('http://localhost:3001/receive', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          url: urls.lesson1,
-          component: 'Week1'
-        }),
-      });
-
-      const data = await res.json();
-      console.log('Vastaus backendiltä:', data);
-
-      if (res.ok && data.test_passed) {
-        handleMarkTested('lesson1');
-        setTestStatus('passed');
-        await markWeekDone();
-      } else {
-        setTestStatus('failed');
-      }
-
-      if (data.checks) {
-        setCheckResults(data.checks);
-      }
-    } catch (err) {
-      console.error('Request failed:', err);
+  try {
+    const token = localStorage.getItem('token'); // <-- Hae token
+    if (!token) {
       setTestStatus('failed');
-      setCheckResults([
-        {
-          name: 'Network error',
-          passed: false,
-          message: 'Could not connect to server',
-        }
-      ]);
+      setCheckResults([{
+        name: 'Authentication',
+        passed: false,
+        message: 'User not authenticated',
+      }]);
+      return;
     }
-  };
+
+    const res = await fetch('http://localhost:3001/receive', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, // <-- Tärkeä lisäys!
+      },
+      body: JSON.stringify({
+        url: urls.lesson1,
+        component: 'Week1',
+      }),
+    });
+
+    const data = await res.json();
+    console.log('Vastaus backendiltä:', data);
+
+    if (res.ok && data.test_passed) {
+      handleMarkTested('lesson1');
+      setTestStatus('passed');
+      await markWeekDone();
+    } else {
+      setTestStatus('failed');
+    }
+
+    if (data.checks) {
+      setCheckResults(data.checks);
+    }
+  } catch (err) {
+    console.error('Request failed:', err);
+    setTestStatus('failed');
+    setCheckResults([
+      {
+        name: 'Network error',
+        passed: false,
+        message: 'Could not connect to server',
+      }
+    ]);
+  }
+};
+
 
   const handleMarkTested = (key: string) => {
     setTestResults(prev => {
