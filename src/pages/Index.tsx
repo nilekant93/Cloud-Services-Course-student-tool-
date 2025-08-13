@@ -157,20 +157,13 @@ const Index = () => {
       <div className="container mx-auto max-w-4xl">
         <div className="space-y-6">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Cloud Services - kurssin deployment testaus
+            Cloud Service Course - Deployment tasks
           </h1>
           <p className="text-lg text-muted-foreground">
-            Viikkokohtaiset osiot, joissa voi suorittaa deployment testejä tehtäväkohtaisesti.
+            Welcome to the Cloud Service Course! This application allows you to test your deployment tasks for each week. Before entering the tasks you must create a student account and log in. Please read the instructions of creating the account carefully.
           </p>
 
-          <Button variant="destructive" onClick={handleClearLocalStorage}>
-            Empty and restart progressing
-          </Button>
-
           <div className="pt-4 space-y-2">
-            <Button variant="default" onClick={testBackendConnection}>
-              Testaa yhteys Flask-backendiin
-            </Button>
             {backendResponse && (
               <p className="text-sm text-muted-foreground">
                 Backend vastasi: {backendResponse}

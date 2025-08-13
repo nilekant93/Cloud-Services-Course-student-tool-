@@ -49,9 +49,9 @@ const Week6 = () => {
     <Layout>
       <div className="container mx-auto max-w-4xl">
         <div className="space-y-6">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Weekly Navigator</h1>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Week 6</h1>
           <p className="text-lg text-muted-foreground">
-            Select a week from the sidebar to view its content. You can collapse the sidebar by clicking the menu icon.
+           
           </p>
           
           <div className="space-y-6">
@@ -63,55 +63,13 @@ const Week6 = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-6">
-                  This is the detailed content for Week 6. Each week contains 
-                  lessons, assignments, and resources tailored to the curriculum.
+                  
                 </p>
                 
                 <div className="space-y-6">
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Lesson 1: Introduction to Concepts</h3>
-                    <div className="flex flex-col md:flex-row gap-4">
-                      <Input 
-                        placeholder="Enter resource URL" 
-                        value={urls.lesson1}
-                        onChange={(e) => handleUrlChange('lesson1', e.target.value)}
-                        className="flex-1"
-                      />
-                      <Button onClick={() => handleTestUrl(urls.lesson1, 'Lesson 1')}>
-                        Test URL
-                      </Button>
-                    </div>
-                  </div>
                   
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Lesson 2: Deep Dive into Applications</h3>
-                    <div className="flex flex-col md:flex-row gap-4">
-                      <Input 
-                        placeholder="Enter resource URL" 
-                        value={urls.lesson2}
-                        onChange={(e) => handleUrlChange('lesson2', e.target.value)}
-                        className="flex-1"
-                      />
-                      <Button onClick={() => handleTestUrl(urls.lesson2, 'Lesson 2')}>
-                        Test URL
-                      </Button>
-                    </div>
-                  </div>
                   
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Weekly Assignment</h3>
-                    <div className="flex flex-col md:flex-row gap-4">
-                      <Input 
-                        placeholder="Enter assignment URL" 
-                        value={urls.assignment}
-                        onChange={(e) => handleUrlChange('assignment', e.target.value)}
-                        className="flex-1"
-                      />
-                      <Button onClick={() => handleTestUrl(urls.assignment, 'Assignment')}>
-                        Test URL
-                      </Button>
-                    </div>
-                  </div>
+                  
                 </div>
               </CardContent>
             </Card>
