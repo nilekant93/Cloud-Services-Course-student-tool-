@@ -1,8 +1,8 @@
 # Cloud Services Course – Student Tool
 
 **This project is part of my summer 2025 training** and includes the following related repositories:  
-- [Cloud Services Course – Admin](link-to-admin-repo)  
-- [Cloud Services Course – Backend](link-to-backend-repo)  
+- [Cloud Services Course – Admin](https://github.com/nilekant93/Cloud-Services-Course-admin-tool)  
+- [Cloud Services Course – Backend](https://github.com/nilekant93/Cloud-Services-Course-Backend)  
 
 ## Overview
 Cloud Services Course **Student Tool** is a web-based application for students.  
@@ -28,23 +28,18 @@ This project is built with:
 
 ## Getting Started
 
-### Option 1 – Using Lovable
-1. Open the [Lovable Project](https://lovable.dev/projects/db2dd965-285b-4f34-be3f-adaece0d8afb)
-2. Make changes directly by prompting  
-3. Changes will be committed automatically to this repository
-
-### Option 2 – Local Development
-#### Prerequisites
-- [Node.js](https://nodejs.org/) vXX+  
+### Prerequisites
+- [Node.js](https://nodejs.org/)  
 - [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
 
-#### Installation
-```bash
-git clone https://github.com/your-username/cloud-services-course-student-tool.git
-cd cloud-services-course-student-tool
+### Installation
+````bash
+git clone https://github.com/nilekant93/Cloud-Services-Course-student-tool-.git
+cd Cloud-Services-Course-student-tool-
 npm install
-
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+````
+### Running the Project
+```bash
+npm run dev
+````
+### > **Important:** For full functionality, this project requires the the app.py file from [Backend](https://github.com/nilekant93/Cloud-Services-Course-Backend) to be started.
