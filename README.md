@@ -1,72 +1,49 @@
-# Welcome to your Lovable project
+# Cloud Services Course – Student Tool
 
-## Project info
+**This project is part of my summer 2025 training** and includes the following related repositories:  
+- [Cloud Services Course – Admin](link-to-admin-repo)  
+- [Cloud Services Course – Backend](link-to-backend-repo)  
 
-**URL**: https://lovable.dev/projects/db2dd965-285b-4f34-be3f-adaece0d8afb
+## Overview
+Cloud Services Course **Student Tool** is a web-based application for students.  
+It allows students to **verify the deployment of their assignments** by providing a URL.  
+The application runs automated tests against the submitted URL and returns either a **"passed"** or **"failed"** result.  
+Students can also track their **weekly progress** throughout the course.
 
-## How can I edit this code?
+> **Note:** The base structure of this project was generated with the help of [Lovable AI](https://lovable.ai/).
 
-There are several ways of editing your application.
+## Features
+- Submit assignment deployment URLs for automated verification
+- Receive immediate pass/fail feedback
+- Track weekly progress over the course
+- View notifications related to assignments and results
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/db2dd965-285b-4f34-be3f-adaece0d8afb) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
+## Tech Stack
 This project is built with:
+- [Vite](https://vitejs.dev/)  
+- [TypeScript](https://www.typescriptlang.org/)  
+- [React](https://react.dev/)  
+- [shadcn/ui](https://ui.shadcn.com/)  
+- [Tailwind CSS](https://tailwindcss.com/)  
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Getting Started
 
-## How can I deploy this project?
+### Option 1 – Using Lovable
+1. Open the [Lovable Project](https://lovable.dev/projects/db2dd965-285b-4f34-be3f-adaece0d8afb)
+2. Make changes directly by prompting  
+3. Changes will be committed automatically to this repository
 
-Simply open [Lovable](https://lovable.dev/projects/db2dd965-285b-4f34-be3f-adaece0d8afb) and click on Share -> Publish.
+### Option 2 – Local Development
+#### Prerequisites
+- [Node.js](https://nodejs.org/) vXX+  
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
 
-## Can I connect a custom domain to my Lovable project?
+#### Installation
+```bash
+git clone https://github.com/your-username/cloud-services-course-student-tool.git
+cd cloud-services-course-student-tool
+npm install
 
-Yes, you can!
 
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
