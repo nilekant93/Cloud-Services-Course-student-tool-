@@ -43,4 +43,4 @@ npm install
 ```bash
 npm run dev
 ````
-### > **Important:** For full functionality, this project requires the the app.py file from [Backend](https://github.com/nilekant93/Cloud-Services-Course-Backend) to be started.
+> **Important:** For full functionality, this project requires the the app.py file from [Backend](https://github.com/nilekant93/Cloud-Services-Course-Backend) to be started.
