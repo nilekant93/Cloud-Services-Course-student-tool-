@@ -127,6 +127,20 @@ const Week3 = () => {
               <CardContent>
                 <p className="text-muted-foreground mb-6">
                   Do one of the following assignments:
+                  <br />AWS S3:
+                  <ul className="list-disc ml-6">
+                    <li>The URL is valid</li>
+                    <li>Includes your username</li>
+                    <li>Includes amazonaws.com</li>
+                    <li>Includes s3.amazonaws.com</li>
+                    <li>includes "hello world"</li>
+                  </ul>
+                  <br />Cloudflare Pages:
+                  <ul className="list-disc ml-6">
+                    <li>The URL is valid</li>
+                    <li>Includes your username</li>
+                    <li>Includes pages.dev</li>
+                  </ul>
                 </p>
 
                 <div className="space-y-6">

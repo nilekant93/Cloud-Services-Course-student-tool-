@@ -100,7 +100,12 @@ const Week4 = () => {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-6">
-                URL must be Firebase hosted and it must include some dynamic content.
+                Test is passed if:
+                <ul className="list-disc ml-6">
+                  <li>The URL is valid</li>
+                  <li>Includes your username</li>
+                  <li>URL ends ".web.app"</li>
+                </ul>
               </p>
               <div className="space-y-4">
                 <div className="flex flex-col md:flex-row gap-4">

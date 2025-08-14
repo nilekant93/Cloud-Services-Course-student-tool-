@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
-import WeekContent from '@/components/WeekContent';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';

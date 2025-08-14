@@ -14,7 +14,7 @@ const WeekSidebar: React.FC<WeekSidebarProps> = ({ className }) => {
   const [testsDone, setTestsDone] = useState<{ [key: string]: boolean }>({});
   const location = useLocation();
 
-  const weeks = Array.from({ length: 8 }, (_, i) => i + 1);
+  const weeks = Array.from({ length: 5 }, (_, i) => i + 1);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);

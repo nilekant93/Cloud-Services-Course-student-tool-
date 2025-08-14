@@ -125,6 +125,32 @@ const Week5 = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
+                <p className="text-muted-foreground mb-6">
+                  Public GitHub Pages URL is passed if:
+                  <ul className="list-disc ml-6">
+                    <li>The URL is valid</li>
+                    <li>Includes your username</li>
+                    <li>Repository name found in URL</li>
+                    <li>includes github.io</li>
+                  </ul>
+                  Raw README.md URL is passed if:
+                  <ul className="list-disc ml-6">
+                    <li>The URL is valid</li>
+                    <li>Includes your username</li>
+                    <li>Repository name found in URL</li>
+                    <li>contains some markdown elements</li>
+                  </ul>
+                </p>
+                <p className="text-muted-foreground mb-6">
+                 <b>To the first field, give just the Github pages deployed URL.</b>
+                 <br /> <b>To the second field, give the raw URL to your README.md file:</b>
+                 <ul className="list-disc ml-6">
+                   <li>Open the Readme file from your repository</li>
+                   <li>Now above the content there are "Preview, Code and Blame" buttons. On the same row at the right side there is a button "Raw"</li>
+                   <li>Click the "Raw" button and you will see then the raw content of the file</li>
+                   <li>Copy the URL (https://raw.githubusercontent.com/yourusername...) and paste it to the second field.</li>
+                 </ul>
+                </p>
                 <div className="space-y-4">
                   <h3 className="text-lg font-medium">Public GitHub Pages URL</h3>
                   <Input

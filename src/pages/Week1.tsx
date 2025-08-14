@@ -124,11 +124,17 @@ const testLesson1 = async () => {
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Fly.io, Render.com or Linux VPS</CardTitle>
+                <CardTitle>Fly.io or Render.com</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-6">
-                  Enter one of the task's URL below. If the test is passed, you will get a verification.
+                  Enter one of the task's URL below. Test is passed if:
+                  <ul className="list-disc ml-6">
+                    <li>The URL is valid</li>
+                    <li>Includes https</li>
+                    <li>includes your username</li>
+                    <li>includes either fly.dev or render.com</li>
+                  </ul>
                 </p>
 
                 <div className="space-y-6">

@@ -104,7 +104,11 @@ const Week2 = () => {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-6">
-                All tests must be passed
+                Test is passed if:
+                <ul className="list-disc ml-6">
+                  <li>The URL is valid</li>
+                  <li>Includes amplifyapp.com</li>
+                </ul>
               </p>
               <div className="space-y-4">
                 <div className="flex flex-col md:flex-row gap-4">
