@@ -13,10 +13,11 @@ Students can also track their **weekly progress** throughout the course.
 > **Note:** The base structure of this project was generated with the help of [Lovable AI](https://lovable.dev/).
 
 ## Features
+- Create a student account and log in / log out
 - Submit assignment deployment URLs for automated verification
 - Receive immediate pass/fail feedback
 - Track weekly progress over the course
-- View notifications related to assignments and results
+
 
 ## Tech Stack
 This project is built with:
