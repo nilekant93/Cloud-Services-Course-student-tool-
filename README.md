@@ -10,7 +10,7 @@ It allows students to **verify the deployment of their assignments** by providin
 The application runs automated tests against the submitted URL and returns either a **"passed"** or **"failed"** result.  
 Students can also track their **weekly progress** throughout the course.
 
-> **Note:** The base structure of this project was generated with the help of [Lovable AI](https://lovable.ai/).
+> **Note:** The base structure of this project was generated with the help of [Lovable AI](https://lovable.dev/).
 
 ## Features
 - Submit assignment deployment URLs for automated verification
