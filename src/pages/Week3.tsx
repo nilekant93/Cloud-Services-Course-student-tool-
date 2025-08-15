@@ -122,7 +122,7 @@ const Week3 = () => {
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>AWS S3 assignment, Tailscale VPN assignment or Cloudflare Pages assignment</CardTitle>
+                <CardTitle>AWS S3 or Cloudflare Pages assignment</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-6">

@@ -88,7 +88,7 @@ const WeekSidebar: React.FC<WeekSidebarProps> = ({ className }) => {
 
           <div className="p-4 border-t border-sidebar-border">
             <p className="text-xs text-sidebar-foreground/70">
-              © 2025 Weekly Navigator
+            
             </p>
           </div>
         </div>
